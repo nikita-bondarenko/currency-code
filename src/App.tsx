@@ -1,26 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+import Converter from "./pages/converter/Converter";
+import Currencies from "./pages/currencies/Currencies";
+import {useGetCurrenciesQuery} from "./store/currency/currency.api";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    useGetCurrenciesQuery()
+
+    return (
+        <div className="App">
+            <div>
+                <Link to={"/"}>Конвертер</Link>
+                <Link to={"/currencies"}>Курсы валют</Link>
+            </div>
+            <Routes>
+                <Route path={"/"} element={<Converter></Converter>}></Route>
+                <Route path={"/currencies"} element={<Currencies></Currencies>}></Route>
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
